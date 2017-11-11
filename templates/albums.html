@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 align="center">Albums List For: <br> {{username}}</h1>
+
+	<p class="important" align ="center">
+<!--this is what happends when when edit is TRUE-->
+		{% if edit %}
+			<table align="center">
+				<tr>
+					<td>Album</td> 
+					<td>Access</td>
+					<td>Edit</td> 
+					<td>Delete</td>
+				</tr>
+				<!--############ EDIT OR DELETE ONE ############-->
+				
+				{% for title_albumid_access in List %}
+				
+				<tr>
+					<td align="center"><a href="{{url_for('album.album_route')}}?id={{title_albumid_access[1]}}" id="album_{{title_albumid_access[1]}}_link">{{title_albumid_access[0]}}</a></td>
+					<td>{{title_albumid_access[2]}}</td>
+					<!--EDIT ONE ALBUM-->
+					<td><a href="{{url_for('album.album_edit_route')}}?id={{title_albumid_access[1]}}" id="album_edit_{{title_albumid_access[1]}}_link">Edit</a></td>
+
+					<!--DELETE ONE ALBUM BY FORM & POST-->
+					<form action = '{{url_for('albums.albums_edit_route')}}', method="post">
+					<input type="hidden" name="op" value="delete">
+					<input type="hidden" name="albumid" value="{{title_albumid_access[1]}}">
+					<td><input type="submit" value="Delete" id="delete_album_{{title_albumid_access[1]}}"></td>
+					</form>	
+					<!--END OF CODE FOR DELETE ALBUM-->
+				</tr>
+				{% endfor %}
+				
+				<!--########### ADD A NEW ALBUM ##################-->
+				<tr>
+					<form action='{{url_for('albums.albums_edit_route')}}' method="post">
+						<input type="hidden" name="op" value="add">
+						<td>New:<input type="text" name="title" id="album_add_name"></td><td></td>
+						<td><input type="hidden" name="username" value = {{session.username}}></td>
+						<td><input type="submit" value="ADD" id="album_add_submit"></td><td></td>
+					</form>
+				</tr>
+			</table>
+		<!--this is what happends when when edit is FALSE-->
+		{% else %}
+			<ul align="center">
+			{% for title_albumid in List %}
+			<a href="{{url_for('album.album_route')}}?id={{title_albumid[1]}}" id="album_{{title_albumid[1]}}_link"> {{title_albumid[0]}}</a><br>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	</p>
+
+
+
+<footer class="center"><font face="verdana">
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	<ul align="center">
+		<div class="btn-group">
+			<a href="/fcda9697ef8a4a3aac8d/pa3" class="btn btn-info" id="nav_home">Home</a>
+			{% if sensitive %}
+				<a href="{{url_for('user.user_edit_route')}}" class="btn btn-info" id="nav_edit">Edit Account</a>
+				<a href="{{url_for('albums.albums_route')}}" class="btn btn-info" id="nav_albums">My Albums</a>
+				{% if not edit  %}
+					<a href="{{url_for('albums.albums_edit_route')}}" id="user_albums_edit_{{username}}" class="btn btn-info">Edit Albums List</a>
+				{% endif %}
+			{% endif %}
+		</div>
+	</ul>
+	</nav>
+</footer>
+
+{% endblock %}
+
+{% block extrabodyscript %}
+
+{% endblock %}

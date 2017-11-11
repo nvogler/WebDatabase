@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+	<title> Home </title>
+	<h1 align="center"> Welcome to our Webpage!<br> Project 2</h1> 
+	<header align="center">
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta name="authors" content="nvogler, xiaofenl, kongzhij">
+		<meta name="descrption" content="EECS485-Group 74">
+		<meta name="keywords" content="photoalbums, photo, album">
+	</header>
+
+	<ul align="center">
+	<br><h3>Available Public Albums<h3>
+	{% for a_t in albumid_title %}
+		<a href="{{url_for('album.album_route')}}?id={{a_t[0]}}" id="album_{{a_t[0]}}_link">{{a_t[1]}}</a>
+		<br><br>
+	{% endfor %}
+	
+	{% if sensitive %}
+	<!-- the session exists logged in home page header-->
+
+        <h3><a href="{{url_for('albums.albums_route')}}">View My Albums</a></h3>
+	{% else %}
+	{% endif %}
+	</ul>
+
+
+	<footer class="center"><font face="verdana">
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+		<ul align="center">
+		<div class="btn-group">
+			<a href="/fcda9697ef8a4a3aac8d/pa3" class="btn btn-info" id="nav_home">Home</a>
+			{% if sensitive %}
+				<a href="{{url_for('user.user_edit_route')}}" class="btn btn-info" id="nav_edit">Edit Account</a>
+				<a href="{{url_for('albums.albums_route')}}" class="btn btn-info" id="nav_albums">My Albums</a>
+			{% endif %}
+		</div>
+		</ul>
+	</nav>
+	</footer>
+	
+{% endblock %}
+
+{% block extrabodyscript %}
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+		<script src="/static/js/userEdit.js"></script>
+		<h1 align="center">Account Settings</h1>
+		<script>
+		pullData();
+		</script>
+		
+		<form name = "update_user" align = "center" enctype='application/json' method="POST">
+			Password:<br>
+			<input type = "password"   id="update_password1_input" name = "password1"><br>
+			Confirm Password:<br>
+			<input type = "password" id="update_password2_input" name = "password2"><br>
+			Firstname:<br>
+			<input type = "text" id="update_firstname_input" name = "firstname" value = "" ><br>
+			Lastname:<br>
+			<input type = "text" id="update_lastname_input" name = "lastname" value = "" ><br>
+			Email:<br>
+			<input type = "text" id="update_email_input" name = "email" value = ""><br>
+			<input type = "submit" value = "Update" id="update_submit" onclick="callJScript(); return false;">
+		</form>	
+		
+	<script>
+	function callJScript(){
+	$(document).ready(function() {
+		$("update_user").submit(function(e){
+			e.preventDefault(e);
+		});
+    });
+	var userInfo = {
+		password1: document.getElementById("update_password1_input").value,
+		password2: document.getElementById("update_password2_input").value,
+		firstname: document.getElementById("update_firstname_input").value,
+		lastname: document.getElementById("update_lastname_input").value,
+		email: document.getElementById("update_email_input").value
+	};
+		
+	checkData(userInfo);
+	return false;
+	}
+	
+	</script>
+
+	<div id="errors"></div>
+		
+<footer class="center"><font face="verdana">
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	<ul align="center">
+		<div class="btn-group">
+			<a href="/fcda9697ef8a4a3aac8d/pa3" class="btn btn-info" id="nav_home">Home</a>
+			<a href="{{url_for('user.user_edit_route')}}" class="btn btn-info" id="nav_edit">Edit Account</a>
+			<a href="{{url_for('albums.albums_route')}}" class="btn btn-info" id="nav_albums">My Albums</a>
+		</div>
+	</ul>
+	</nav>
+</footer>
+
+{% endblock %}
+
+{% block extrabodyscript %}
+	<script src="/static/js/userEdit.js"></script>
+{% endblock %}

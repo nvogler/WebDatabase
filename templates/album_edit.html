@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block content %}
+	<p align = "center" class="important">Pictues from <b>{{albumTitle}}</b><br>
+    <!-- change the album name -->
+    <form align="center" action="{{url_for('album.album_edit_route')}}" method="post">
+    	<input type="hidden" name="op" value="rename">
+    	<input type="hidden" name="albumid" value="{{albumid}}">
+    	New Album Name:
+    	<input type="text" name="newalbumname" value="new album name">
+    	<input type="submit" name="Submit">
+    </form><br>
+    <!-- alternate the private to public or public to public-->
+    <form align="center" action="{{url_for('album.album_edit_route')}}" method="post">
+    	<input type="hidden" name="op" value="access">
+    	<input type="hidden" name="albumid" value="{{albumid}}"> 
+    	<input type="radio" name="access" value="public" id="album_edit_public_radio">
+    	Change the access to public<br>
+    	<input type="radio" name="access" value="private" id="album_edit_private_radio">
+    	Change the access to private<br>
+    	<input type="submit" value="Submit" id="album_edit_access_submit">
+    </form>
+
+
+
+    <!--edit the access permission for the Album table-->
+    {% if sensitive %}
+    	<br><br>
+	    <table align="center">
+	    <!-- the table colume names -->
+	    <tr><td>Username</td><td>Update Access</td></tr>
+	    <!-- add display all the users with accesses and give the revoke option-->
+	    
+	    {% for username in username_access %}
+	    <tr>
+	    	<form action="{{url_for('album.album_edit_route')}}" method="post">
+	    		<input type="hidden" name="op" value="revoke">
+	    		<input type="hidden" name="albumid" value="{{albumid}}">
+	    		<input type="hidden" name="username" value="{{username}}">
+	    		<td>{{username}}</td>
+	    		<td><input type="submit" value="Revoke" id="album_edit_revoke_{{username}}"></td>
+	    	</form></tr>
+	    {% endfor %}
+	    <tr><td>
+	    	<form align="center" action="{{url_for('album.album_edit_route')}}" method="post">		
+				<input type="hidden" name="username" id="album_edit_grant_input">
+  				<input type="hidden" name="op" value="grant">
+  				<input type="hidden" name="albumid" value="{{albumid}}">
+  				<input type="submit" value="Grant" id="album_edit_grant_submit">
+			</form></td><td></td>
+	    </tr>
+	    </table>
+	    <br><br>
+    {% endif %}
+
+    <p align = "center" class="important">Pictues from <b>{{albumTitle}}</b><br>
+
+
+	{% for pic in picsList %}
+		<p align="center">
+			<a onclick="picviewing('{{pic[0]}}')" align="center" id="pic_{{pic[0]}}_link"><img src="/static/images/{{pic[0]}}.{{pic[1]}}" height = "100" width = "100"></a>	
+		<!-- Delete Photos -->
+		<form align="center" action="{{url_for('album.album_edit_route')}}" method="post">
+			<input type="hidden" name="op" value="delete">
+			<input type="hidden" name="albumid" value="{{albumid}}">
+			<input type="hidden" name="picid" value="{{pic[0]}}">
+			<input type="submit" value="DELETE" id="delete_pic_{{pic[0]}}">
+		</form>
+		</p>	
+	{% endfor %}
+
+	{% if sensitive %}
+	<!-- add one photo -->
+	<form action="{{url_for('album.album_edit_route')}}" method="post" enctype=multipart/form-data>
+		<input type="hidden" name="op" value="add">
+		<input type="hidden" name="albumid" value="{{ albumid }}">
+		<input type="file" name="file" id="file_input">
+     	<input type="submit" value="Upload" id="file_submit"><br>
+	</form>
+	{% endif %}
+
+{% endblock %}
+
+{% block extrabodyscript %}
+	<script src="/static/js/album.js"></script>
+{% endblock %}

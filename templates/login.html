@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3 align="left">
+</h3>
+<div id="error_msg_div"></div>
+<p align="center" class="error" id="errorMsg">
+</p>
+
+<p align="center">
+	<form method="POST" enctype=multipart/form-dat>
+		Username:	<input type="text" name="username" value="" id="login_username_input">
+		<br>
+		Password:	<input type="password" name="password" value="" id="login_password_input">
+		<br><br>
+		<button type="button" id="login_submit" onclick="tryLogin()">Submit</button><br>
+	</form>
+</p>
+
+
+<footer class="center"><font face="verdana">
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	<ul align="center">
+		<div class="btn-group">
+			<a href="/fcda9697ef8a4a3aac8d/pa3" class="btn btn-info" id="nav_home">Home</a>
+		</div>
+	</ul>
+	</nav>
+</footer>
+{% endblock %}
+
+{% block extrabodyscript %}
+	<script src="/static/js/login.js"></script>
+{% endblock %}

@@ -1,0 +1,71 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+	
+<style>
+  #grad1 {
+    height: 1000px;
+    background: rgb(102, 204, 255); /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(rgb(102, 204, 255), white); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(rgb(102, 204, 255), white); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(rgb(102, 204, 255), white); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(rgb(102, 204, 255), white); /* Standard syntax (must be last) */
+  }
+  
+  	.navbar-xs { min-height:32px; height: 32px; }
+	.navbar-xs .navbar-brand{ padding: 2px 12px;font-size: 16px;line-height: 28px; }
+	.navbar-xs .navbar-nav > li > a {  padding-top: 2px; padding-bottom: 2px; line-height: 28px; }
+	
+	p{
+	padding-top: 15px;
+	padding-bottom:15px;}
+</style>
+
+<div id="grad1">
+<head>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="	https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <title>EECS485 Project 3</title>
+    <meta name="description" content="EECS 485 is awesome">
+</head>
+
+
+<body>
+	<nav class="navbar navbar-xs navbar-fixed-top">
+	<ul align="right">
+	<div class="btn-group" id="logoutDiv">
+		{% if sensitive %}
+			Logged in as {{session['firstname']}} {{session['lastname']}}    	
+
+		<form method="post">
+			<button type = "button" class="btn btn-info" id="nav_logout" onclick="tryLogout()">Log out</button>
+		</form>
+		
+		{% else %}
+		  <a href="{{url_for('user.new_user_route')}}" id="home_user_create">New User Register</a>
+			   
+		  <a href="{{url_for('login.login_route')}}" id="home_login">Log In&nbsp;&nbsp;&nbsp;</a>
+		{% endif %}
+	</div>
+	</ul>
+	</nav>
+	
+	<script src="/static/js/login.js"></script>
+  <div class="center">
+{% block content %}
+
+{% endblock %}
+  </div>
+  	<script src="/static/js/errorList.js"></script>
+{% block extrabodyscript %}
+
+{% endblock %}
+  </body>
+
+</html>

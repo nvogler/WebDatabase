@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+    <h1 align = "center">Viewing Picture</h1>
+    <p align = "center" class="important" id="pic_{{picid}}_caption">
+		<br>
+     <div id = "content"> <img src="/static/images/{{picid}}.{{format}}"> </div>
+	</p>
+	
+	<p align = "center" id="pic_{{picid}}_caption"> {{caption}} </p>
+	{%if edit%}
+		<form align = "center" action = "{{url_for('pic.pic_route')}}" method = "post">
+			<input type="hidden" name="op" value="caption">
+			<input type="hidden" name="picid" value="{{picid}}">
+			<input type = "text" name = "caption" maxlength = "256" style = "height:200px; width:420px;" id="pic_caption_input">
+			<br>
+			<input type = "submit" value = "OK" id="pic_caption_submit">
+		</form>
+	{%endif%}
+	
+	<div id="content"></div>
+	
+<footer>
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	<ul align="center">
+	<div class="btn-group">
+		{% if prevPicId == -1 %}
+			<button type ="button" class="btn btn-info">No Previous Picture</button>
+		{% else %}
+			<a href="{{url_for('pic.pic_route')}}?id={{prevPicId}}" id="prev_pic" class="btn btn-info">Previous Picture</a>
+		{% endif %}
+		
+		<a href="{{url_for('album.album_route')}}?id={{albumid}}" id="parent_album" class="btn btn-info">Back to Album View</a>
+		<a href="/wludfv42t9/pa3" class="btn btn-info" id="nav_home">Home</a>
+		
+		{% if nextPicId == -1 %}
+			<button type ="button" class="btn btn-info">No Next Picture</button>
+		{% else %}
+			<a href="{{url_for('pic.pic_route')}}?id={{nextPicId}}" id="next_pic" class="btn btn-info">Next Picture</a>
+		{% endif %}
+	</div>
+	</ul>
+	</nav>
+</footer>	
+	
+{% endblock %}
+
+{% block extrabodyscript %}
+	<script src="/static/js/pic.js"></script>
+{% endblock %}

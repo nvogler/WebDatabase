@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+		<h1 align="center">Create New Account</h1>
+		
+		<form name = "new_user" align = "center" enctype='application/json' method="POST">
+			Username:<br>
+			<input type="text" id="new_username_input" name = "username" value = "{{username_lt}}"><br>
+			Password:<br>
+			<input type = "password"  id="new_password1_input" name = "password1"><br>
+			Confirm Password:<br>
+			<input type = "password" id="new_password2_input" name = "password2"><br>
+			Firstname:<br>
+			<input type = "text" id="new_firstname_input" name = "firstname" value = "{{firstname_lt}}" ><br>
+			Lastname:<br>
+			<input type = "text" id="new_lastname_input" name = "lastname" value = "{{lastname_lt}}" ><br>
+			Email:<br>
+			<input type = "text" id="new_email_input" name = "email" value = "{{email_lt}}"><br>
+			<input type = "submit" value = "Create" id="new_submit" onclick="callJScript(); return false;">
+		</form>	
+	
+	<script>
+	function callJScript(){
+	$(document).ready(function() {
+		$("new_user").submit(function(e){
+			e.preventDefault(e);
+		});
+    });
+	var userInfo = {
+		username: document.getElementById("new_username_input").value,
+		password1: document.getElementById("new_password1_input").value,
+		password2: document.getElementById("new_password2_input").value,
+		firstname: document.getElementById("new_firstname_input").value,
+		lastname: document.getElementById("new_lastname_input").value,
+		email: document.getElementById("new_email_input").value
+	};
+		
+	checkData(userInfo);
+	return false;
+	}
+	
+	</script>
+
+	<div id="errors"></div>
+	
+<footer class="center"><font face="verdana">
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+	<ul align="center">
+		<div class="btn-group">
+			<a href="/fcda9697ef8a4a3aac8d/pa3" class="btn btn-info" id="nav_home">Home</a>
+			{% if sensitive %}
+				<a href="{{url_for('user.user_edit_route')}}" class="btn btn-info" id="nav_edit">Edit Account</a>
+				<a href="{{url_for('albums.albums_route')}}" class="btn btn-info" id="nav_albums">My Albums</a>
+			{% endif %}
+		</div>
+	</ul>
+	</nav>
+</footer>
+
+{% endblock %}
+
+{% block extrabodyscript %}
+	<script src="/static/js/checkData.js"></script>
+{% endblock %}
